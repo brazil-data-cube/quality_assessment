@@ -89,3 +89,4 @@ for b in range(numbands):
     plt.colorbar()
     plt.savefig(out_file +'.png', dpi=300, bbox_inches='tight')
     plt.close(fig=None)
+    
