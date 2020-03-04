@@ -3,10 +3,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
+imagePath1 = '/home/fronza/Fronza_BDC/1_SEN2CORR_V_TESTE/2018_01_10/S2A_MSIL2A_20180110T132221_N0206_R038_T23LLF_20191216T040849_255.SAFE/GRANULE/L2A_T23LLF_A013334_20180110T132224/IMG_DATA/R10m'
+imagePath2 = '/home/fronza/Fronza_BDC/1_SEN2CORR_V_TESTE/2018_01_10/S2A_MSIL2A_20180110T132221_N9999_R038_T23LLF_20200206T173655_280.SAFE/GRANULE/L2A_T23LLF_A013334_20180110T132224/IMG_DATA/R10m'
+
+ds1x = imagePath1
+ds2x = imagePath2
+
 #carrega o dataset
-ds1x = '/home/fronza/Fronza_BDC/1_SEN2CORR_TESTE1/2018_06_19/S2A_MSIL2A_20180619T132231_N0206_R038_T23LLF_20180619T150922_255.SAFE/GRANULE/L2A_T23LLF_A015622_20180619T132232/IMG_DATA/R10m'
-ds2x = '/home/fronza/Fronza_BDC/1_SEN2CORR_TESTE1/2018_06_19/S2A_MSIL2A_20180619T132231_N9999_R038_T23LLF_20200206T164947_280.SAFE/GRANULE/L2A_T23LLF_A015622_20180619T132232/IMG_DATA/R10m'
-output_folder = '/home/fronza/Fronza_BDC/1_SEN2CORR_TESTE1/2018_06_19/diff'
+#ds1x = '/home/fronza/Fronza_BDC/1_SEN2CORR_TESTE1/2018_06_19/S2A_MSIL2A_20180619T132231_N0206_R038_T23LLF_20180619T150922_255.SAFE/GRANULE/L2A_T23LLF_A015622_20180619T132232/IMG_DATA/R10m'
+#ds2x = '/home/fronza/Fronza_BDC/1_SEN2CORR_TESTE1/2018_06_19/S2A_MSIL2A_20180619T132231_N9999_R038_T23LLF_20200206T164947_280.SAFE/GRANULE/L2A_T23LLF_A015622_20180619T132232/IMG_DATA/R10m'
+output_folder = '/home/fronza/Fronza_BDC/1_SEN2CORR_V_TESTE/2018_01_10/diff'
 
 #pega o stk de bandas .tif
 for filename in os.listdir(ds1x):
@@ -68,7 +74,7 @@ for b in range(numbands):
     #transforma para float
     band_a = band_a.astype(float)
     band_b = band_b.astype(float)
-    #define nan para -9999
+    #define -9999 para nan 
     band_a[band_a== -9999]=np.nan
     band_b[band_b== -9999]=np.nan
     #calcula a diferença para a banda
