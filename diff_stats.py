@@ -17,6 +17,7 @@ for filename in os.listdir(pathdiff):
 
 bands = diffimg.RasterCount
 
+a = [-2000, -1000, -500, 0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
 #median(a[, axis, out, overwrite_input, keepdims])	Compute the median along the specified axis.
 #average(a[, axis, weights, returned])	Compute the weighted average along the specified axis.
 #mean(a[, axis, dtype, out, keepdims])	Compute the arithmetic mean along the specified axis.
@@ -35,10 +36,14 @@ for b in range(1, bands+1):
     median = np.median(data) #calculate median without value 0
     std = np.std(data) #calculate std without value 0
     var = np.var(data) #calculate var without value 0
-    histog = np.histogram(data)	#Compute the histogram of a set of data.
+    histog = np.hstack(data)	#Compute the histogram of a set of data.
+    a = [-2000, -1000, -500, 0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
     print("[ STATS DIFF] =  Band=%.1d, Min=%.3f, Max=%.3f, Mean=%.3f, Median=%.3f, StdDev=%.3f, Variance=%.3f" % ((b), dmin, dmax, mean, median, std, var))
-    plt.hist(histog)
+    plt.hist(histog, bins=a)
     plt.show()
+
+
+
 
 print(diffname)
 #rb = ds1.GetRasterBand(1)
