@@ -1,6 +1,7 @@
 import gdal
 import os
 from rasterio.plot import show
+import matplotlib.pyplot as plt
 import numpy as np
 
 pathdiff = '/home/fronza/Fronza_BDC/1_SEN2CORR_V_TESTE/2018_01_10/diff'
@@ -27,14 +28,17 @@ bands = diffimg.RasterCount
 #nanvar(a[, axis, dtype, out, ddof, keepdims])	Compute the variance along the specified axis, while ignoring NaNs.
 
 for b in range(1, bands+1):
-    data = diffimg.GetRasterBand(b).ReadAsArray().astype('float')
+    data = diffimg.GetRasterBand(b).ReadAsArray()
+    dmin = np.min(data) #min value
+    dmax = np.max(data) #max value
     mean = np.mean(data) #calculate mean 
     median = np.median(data) #calculate median without value 0
     std = np.std(data) #calculate std without value 0
     var = np.var(data) #calculate var without value 0
-    #histogram(a[, bins, range, normed, weights, …])	Compute the histogram of a set of data.
-    print("[ STATS DIFF] =  Band=%.1d, Mean=%.3f, Median=%.3f, StdDev=%.3f, Variance=%.3f" % ((b), mean, median, std, var))
-
+    histog = np.histogram(data)	#Compute the histogram of a set of data.
+    print("[ STATS DIFF] =  Band=%.1d, Min=%.3f, Max=%.3f, Mean=%.3f, Median=%.3f, StdDev=%.3f, Variance=%.3f" % ((b), dmin, dmax, mean, median, std, var))
+    plt.hist(histog)
+    plt.show()
 
 print(diffname)
 #rb = ds1.GetRasterBand(1)
