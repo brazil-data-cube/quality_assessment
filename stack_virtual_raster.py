@@ -1,8 +1,7 @@
 #
-# This file is part of Brazil Data Cube Validationo Tools.
+# This file is part of Brazil Data Cube Validation Tools.
 # Copyright (C) 2020 INPE.
 #
-
 # Python Native
 import logging
 import os
@@ -39,6 +38,7 @@ def stack_virtual_raster(image_path1, image_path2, output_folder):
     #TODO do a function that creates the output
     logging.info('{}'.format(li_bands1))
     #Set Virtual Raster options
+    print(li_bands1)
     vrt_options = gdal.BuildVRTOptions(separate='-separate')
     #Create virtual raster
     ds1 = gdal.BuildVRT('img1.vrt', li_bands1, options=vrt_options)
@@ -81,19 +81,21 @@ def stack_virtual_raster(image_path1, image_path2, output_folder):
     #Create output tif
     #os.chdir(output_folder)
     gdal.Translate(output_filename2, ds2, format='Gtiff')
+    print(li_bands1)
+    print(li_bands2)
 
-
-def main():
+if __name__ == '__main__':
     #image paths
     #TODO use lib sys to obtain parameters from command line
-    image_path1 = '/home/fronza/Fronza_BDC/1_SEN2CORR_V_TESTE/2018_01_10/S2A_MSIL2A_20180110T132221_N0206_R038_T23LLF_20191216T040849_255.SAFE/GRANULE/L2A_T23LLF_A013334_20180110T132224/IMG_DATA/R10m'
-    image_path2 = '/home/fronza/Fronza_BDC/1_SEN2CORR_V_TESTE/2018_01_10/S2A_MSIL2A_20180110T132221_N9999_R038_T23LLF_20200206T173655_280.SAFE/GRANULE/L2A_T23LLF_A013334_20180110T132224/IMG_DATA/R10m'
-    output_folder = '/home/fronza/Fronza_BDC/1_SEN2CORR_V_TESTE/2018_01_10/diff'
+    image_path1 = '/home/fronza/Fronza_BDC/2_SEN2CORR_2_8_ancillary_data_test/2018_01_10/S2A_aux_MSIL2A_20180110T132221_N9999_R038_T23LLF_20200311T190031.SAFE/GRANULE/L2A_T23LLF_A013334_20180110T132224/IMG_DATA/R10m'
+    image_path2 = '/home/fronza/Fronza_BDC/2_SEN2CORR_2_8_ancillary_data_test/2018_01_10/S2A_s_aux_MSIL2A_20180110T132221_N9999_R038_T23LLF_20200311T193142.SAFE/GRANULE/L2A_T23LLF_A013334_20180110T132224/IMG_DATA/R10m'
+    output_folder = '/home/fronza/Fronza_BDC/2_SEN2CORR_2_8_ancillary_data_test/2018_01_10/output'
 
     print('STARTED stack_virtual_raster')
     start = time.time()
 
     stack_virtual_raster(image_path1, image_path2, output_folder)
+
 
     end = time.time()
     print('ENDED')
