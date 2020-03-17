@@ -5,21 +5,27 @@
 # Python Native
 import os
 import time
+import sys
 # 3rdparty
 import gdal
 from rasterio.plot import show
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 def diff_bands_stats(input_folder, output_folder):
+    '''
+    documentar para sair automaticamente
+    '''
     #inicializa variavel
 
     #pega a imagem de diferença na pasta
     for filename in os.listdir(input_folder):
         if '_DIF_' in filename:
-            #diffname = filename
+            diffname = filename
             diffimg = gdal.Open(os.path.join(input_folder, filename))
+
+    #os.chdir(dir) vai para o diretório definido em os.chdir
+    os.chdir(output_folder)
 
     #conta bandas
     bands = diffimg.RasterCount
@@ -28,7 +34,6 @@ def diff_bands_stats(input_folder, output_folder):
     x_label=None
     y_label=None
       
-
     #compute histogram to each band
     for b in range(1, bands+1):
         data = diffimg.GetRasterBand(b).ReadAsArray()
@@ -64,19 +69,17 @@ def diff_bands_stats(input_folder, output_folder):
         out_file = os.path.basename(filename) + "_band_" + str(b)
         plt.savefig(out_file +'.png', dpi=300, bbox_inches='tight')
         plt.close(fig=None)
-        
 
 if __name__ == '__main__':
-    #image paths
-    #TODO use lib sys to obtain parameters from command line
-    input_folder = '/home/fronza/Fronza_BDC/2_SEN2CORR_2_8_ancillary_data_test/2018_01_10/output'
-    output_folder = '/home/fronza/Fronza_BDC/2_SEN2CORR_2_8_ancillary_data_test/2018_01_10/output'
 
+    if len(sys.argv) <= 2: # aqui fazes a verificacao sobre quantos args queres receber, o nome do programa conta como 1
+        print('Argumentos insuficientes para rodar a função')
+        sys.exit()
     print('STARTED diff_bands_stats')
     start = time.time()
-    os.chdir(output_folder)
-    diff_bands_stats(input_folder, output_folder)
+    input_folder, output_folder = sys.argv[1], sys.argv[2]
 
+    diff_bands_stats(input_folder, output_folder)
     end = time.time()
     print('ENDED')
     print('TOTAL ELAPSED TIME: {}'.format(end-start))

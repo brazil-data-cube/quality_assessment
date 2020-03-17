@@ -6,12 +6,13 @@
 import logging
 import os
 import time
+import sys
 # 3rdparty
 import gdal
 import rasterio
 
 
-def stack_virtual_raster(image_path1, image_path2, output_folder):
+def stack_virtual_raster(image_path1, image_path2):
     #Set current working dir to first image
     os.chdir(image_path1)
 
@@ -71,7 +72,7 @@ def stack_virtual_raster(image_path1, image_path2, output_folder):
             li_bands2.append(os.path.join(filename))
 
     #TODO use the function created for img 1
-    #TODO Check if crt_options is necessary, since it was defined before
+    #TODO Check if vrt_options is necessary, since it was defined before
     #Set Virtual Raster options
     vrt_options = gdal.BuildVRTOptions(separate='-separate')
     #Create virtual raster
@@ -85,18 +86,14 @@ def stack_virtual_raster(image_path1, image_path2, output_folder):
     print(li_bands2)
 
 if __name__ == '__main__':
-    #image paths
-    #TODO use lib sys to obtain parameters from command line
-    image_path1 = '/home/fronza/Fronza_BDC/2_SEN2CORR_2_8_ancillary_data_test/2018_01_10/S2A_aux_MSIL2A_20180110T132221_N9999_R038_T23LLF_20200311T190031.SAFE/GRANULE/L2A_T23LLF_A013334_20180110T132224/IMG_DATA/R10m'
-    image_path2 = '/home/fronza/Fronza_BDC/2_SEN2CORR_2_8_ancillary_data_test/2018_01_10/S2A_s_aux_MSIL2A_20180110T132221_N9999_R038_T23LLF_20200311T193142.SAFE/GRANULE/L2A_T23LLF_A013334_20180110T132224/IMG_DATA/R10m'
-    output_folder = '/home/fronza/Fronza_BDC/2_SEN2CORR_2_8_ancillary_data_test/2018_01_10/output'
-
+    
+    if len(sys.argv) <= 2: # aqui fazes a verificacao sobre quantos args queres receber, o nome do programa conta como 1
+        print('Argumentos insuficientes para rodar a função')
+        sys.exit()
     print('STARTED stack_virtual_raster')
     start = time.time()
-
-    stack_virtual_raster(image_path1, image_path2, output_folder)
-
-
+    image_path1, image_path2 = sys.argv[1], sys.argv[2]
+    stack_virtual_raster(image_path1, image_path2)
     end = time.time()
     print('ENDED')
     print('TOTAL ELAPSED TIME: {}'.format(end-start))

@@ -5,30 +5,34 @@
 # Python Native
 import os
 import time
+import sys
 # 3rdparty
 from osgeo import gdal
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import linregress
 
-def compare_linregress(image_path1,image_path2, out_path):
+def compare_linregress(image_path1,image_path2, output_folder):
     #pega o stk de bandas .tif img1
     for filename in os.listdir(image_path1):
         if filename.endswith('.tif'):
             i1 = filename
+            print(i1)
             ds1 = gdal.Open(os.path.join(image_path1, filename))
 
     #pega o stk de bandas .tif img2
     for filename in os.listdir(image_path2):
         if filename.endswith('.tif'):
             i2 = filename
+            print(i2)
             ds2 = gdal.Open(os.path.join(image_path2, filename))
 
     #os.chdir(dir) vai para o diretório definido em os.chdir
-    os.chdir(out_path)
+    os.chdir(output_folder)
 
     #deve ser feito um loop pra iterar nas bandas
     numbands = ds1.RasterCount
+    print(numbands)
 
     for b in range(numbands):
         bandref = np.array(ds1.GetRasterBand(b+1).ReadAsArray())
@@ -82,28 +86,21 @@ def compare_linregress(image_path1,image_path2, out_path):
         plt.colorbar()
         plt.savefig(out_file +'.png', dpi=300, bbox_inches='tight')
         plt.close(fig=None)
+        
 
 if __name__ == '__main__':
-    #image paths
-    #TODO use lib sys to obtain parameters from command line
 
-    #folder read
-    image_path1 = "/home/fronza/Fronza_BDC/2_SEN2CORR_2_8_ancillary_data_test/2018_01_10/S2A_aux_MSIL2A_20180110T132221_N9999_R038_T23LLF_20200311T190031.SAFE/GRANULE/L2A_T23LLF_A013334_20180110T132224/IMG_DATA/R10m"
-    image_path2 = "/home/fronza/Fronza_BDC/2_SEN2CORR_2_8_ancillary_data_test/2018_01_10/S2A_s_aux_MSIL2A_20180110T132221_N9999_R038_T23LLF_20200311T193142.SAFE/GRANULE/L2A_T23LLF_A013334_20180110T132224/IMG_DATA/R10m"
-    #Define path saída
-    out_path = '/home/fronza/Fronza_BDC/2_SEN2CORR_2_8_ancillary_data_test/2018_01_10/output'
-    
+    if len(sys.argv) <= 3: # aqui fazes a verificacao sobre quantos args queres receber, o nome do programa conta como 1
+        print('Argumentos insuficientes para rodar a função')
+        sys.exit()
     print('STARTED compare_linregress')
     start = time.time()
-
-    compare_linregress(image_path1,image_path2, out_path)
-
+    image_path1, image_path2, output_folder = sys.argv[1], sys.argv[2], sys.argv[3]
+    compare_linregress(image_path1,image_path2, output_folder)
     ds1=None
     ds2=None
     x=None
     y=None
-
     end = time.time()
     print('ENDED')
     print('TOTAL ELAPSED TIME: {}'.format(end-start))
-   

@@ -5,6 +5,7 @@
 # Python Native
 import os
 import time
+import sys
 # 3rdparty
 import gdal
 import numpy as np
@@ -82,22 +83,18 @@ def diff_bands_stk(image_path1, image_path2, output_folder):
 
 
 if __name__ == '__main__':
-    #image paths
-    #TODO use lib sys to obtain parameters from command line
-    image_path1 = '/home/fronza/Fronza_BDC/2_SEN2CORR_2_8_ancillary_data_test/2018_01_10/S2A_aux_MSIL2A_20180110T132221_N9999_R038_T23LLF_20200311T190031.SAFE/GRANULE/L2A_T23LLF_A013334_20180110T132224/IMG_DATA/R10m'
-    image_path2 = '/home/fronza/Fronza_BDC/2_SEN2CORR_2_8_ancillary_data_test/2018_01_10/S2A_s_aux_MSIL2A_20180110T132221_N9999_R038_T23LLF_20200311T193142.SAFE/GRANULE/L2A_T23LLF_A013334_20180110T132224/IMG_DATA/R10m'
-    output_folder = '/home/fronza/Fronza_BDC/2_SEN2CORR_2_8_ancillary_data_test/2018_01_10/output'
-
+    
+    if len(sys.argv) <= 3: # aqui fazes a verificacao sobre quantos args queres receber, o nome do programa conta como 1
+        print('Argumentos insuficientes para rodar a função')
+        sys.exit()
     print('STARTED diff_bands_stk')
     start = time.time()
-
+    image_path1, image_path2, output_folder = sys.argv[1], sys.argv[2], sys.argv[3]
     diff_bands_stk(image_path1, image_path2, output_folder)
-
     #limpa as variáveis
     ds=None
     ds1=None
     ds2=None
-
     end = time.time()
     print('ENDED')
     print('TOTAL ELAPSED TIME: {}'.format(end-start))
