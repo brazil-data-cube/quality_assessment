@@ -9,7 +9,7 @@ import sys
 # 3rdparty
 import gdal
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 def diff_bands_stk(image_path1, image_path2, output_folder):
     #Set current working dir to first image

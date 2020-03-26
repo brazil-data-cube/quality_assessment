@@ -44,7 +44,8 @@ def stack_virtual_raster(image_path1, image_path2):
     #Create virtual raster
     ds1 = gdal.BuildVRT('img1.vrt', li_bands1, options=vrt_options)
     #Set output tif filename
-    output_filename1 = image_path1.split("/")[-3] + '_stk.tif'  
+    print(image_path1)
+    output_filename1 = image_path1.split("\\")[-3] + '_stk.tif'
     #Create output tif
     gdal.Translate(output_filename1, ds1, format='GTiff')
 
@@ -78,7 +79,7 @@ def stack_virtual_raster(image_path1, image_path2):
     #Create virtual raster
     ds2 = gdal.BuildVRT('img2.vrt', li_bands2, options=vrt_options)
     #Set output tif filename
-    output_filename2 = image_path2.split("/")[-3] + '_stk.tif'  
+    output_filename2 = image_path2.split("\\")[-3] + '_stk.tif'
     #Create output tif
     #os.chdir(output_folder)
     gdal.Translate(output_filename2, ds2, format='Gtiff')
