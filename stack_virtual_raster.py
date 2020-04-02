@@ -11,78 +11,37 @@ import sys
 import gdal
 import rasterio
 
+def output(image_path, li_bands):
+    # Set current working dir to first image
+    os.chdir(image_path)
+    logging.info('{}'.format(li_bands))
+    #Set Virtual Raster options
+    vrt_options = gdal.BuildVRTOptions(separate='-separate')
+    #Set output tif filename
+    output_filename = image_path.split("\\")[-3] + '_stk.tif'
+    # Create virtual raster
+    ds = gdal.BuildVRT('img{}.vrt'.format(output_filename), li_bands, options=vrt_options)
+    #Create output tif
+    gdal.Translate(output_filename, ds, format='GTiff')
+
+
+def list_bands(image_path, patterns):
+    # Creates an empty list
+    li_bands = list()
+    # Search Sentinel-2 blue, green, red, nir and insert to the list
+    for filename in os.listdir(image_path):
+        if filename.endswith((patterns)):
+            li_bands.append(os.path.join(filename))
+    return li_bands
 
 def stack_virtual_raster(image_path1, image_path2):
-    #Set current working dir to first image
-    os.chdir(image_path1)
-
     #Creates an empty list
-    li_bands1 = list()
     #Search Sentinel-2 blue, green, red, nir and insert to the list
-    #TODO do a function that given a path and a pattern (or set of patterns) return your images
-    for filename in os.listdir(image_path1):
-        if filename.endswith("_B02_10m.jp2"):
-            li_bands1.append(os.path.join(filename))
+    li_bands1 = list_bands(image_path1, patterns)
+    li_bands2 = list_bands(image_path2, patterns)
 
-    for filename in os.listdir(image_path1):
-        if filename.endswith("_B03_10m.jp2"):
-            li_bands1.append(os.path.join(filename))
-                
-    for filename in os.listdir(image_path1):
-        if filename.endswith("_B04_10m.jp2"):
-            li_bands1.append(os.path.join(filename))
-
-    for filename in os.listdir(image_path1):
-        if filename.endswith("_B08_10m.jp2"):
-            li_bands1.append(os.path.join(filename))
-
-    #TODO do a function that creates the output
-    logging.info('{}'.format(li_bands1))
-    #Set Virtual Raster options
-    print(li_bands1)
-    vrt_options = gdal.BuildVRTOptions(separate='-separate')
-    #Create virtual raster
-    ds1 = gdal.BuildVRT('img1.vrt', li_bands1, options=vrt_options)
-    #Set output tif filename
-    print(image_path1)
-    output_filename1 = image_path1.split("\\")[-3] + '_stk.tif'
-    #Create output tif
-    gdal.Translate(output_filename1, ds1, format='GTiff')
-
-    #Set current working dir to second image
-    os.chdir(image_path2)
-
-    #Creates an empty list
-    li_bands2 = list()
-    #Search Sentinel-2 blue, green, red, nir and insert to the list
-    #TODO use de function created for img1
-    for filename in os.listdir(image_path2):
-        if filename.endswith("_B02_10m.jp2"):
-            li_bands2.append(os.path.join(filename))
-
-    for filename in os.listdir(image_path2):
-        if filename.endswith("_B03_10m.jp2"):
-            li_bands2.append(os.path.join(filename))
-                
-    for filename in os.listdir(image_path2):
-        if filename.endswith("_B04_10m.jp2"):
-            li_bands2.append(os.path.join(filename))
-
-    for filename in os.listdir(image_path2):
-        if filename.endswith("_B08_10m.jp2"):
-            li_bands2.append(os.path.join(filename))
-
-    #TODO use the function created for img 1
-    #TODO Check if vrt_options is necessary, since it was defined before
-    #Set Virtual Raster options
-    vrt_options = gdal.BuildVRTOptions(separate='-separate')
-    #Create virtual raster
-    ds2 = gdal.BuildVRT('img2.vrt', li_bands2, options=vrt_options)
-    #Set output tif filename
-    output_filename2 = image_path2.split("\\")[-3] + '_stk.tif'
-    #Create output tif
-    #os.chdir(output_folder)
-    gdal.Translate(output_filename2, ds2, format='Gtiff')
+    output(image_path1, li_bands1)
+    output(image_path2, li_bands2)
     print(li_bands1)
     print(li_bands2)
 
@@ -93,6 +52,8 @@ if __name__ == '__main__':
         sys.exit()
     print('STARTED stack_virtual_raster')
     start = time.time()
+    patterns_s2 = ("B02_10m.jp2", "B03_10m.jp2", "_B04_10m.jp2", "_B08_10m.jp2")
+    patterns = patterns_s2
     image_path1, image_path2 = sys.argv[1], sys.argv[2]
     stack_virtual_raster(image_path1, image_path2)
     end = time.time()
