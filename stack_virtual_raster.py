@@ -42,6 +42,7 @@ def stack_virtual_raster(image_path1, image_path2):
 
     output(image_path1, li_bands1)
     output(image_path2, li_bands2)
+
     print(li_bands1)
     print(li_bands2)
 
@@ -53,7 +54,8 @@ if __name__ == '__main__':
     print('STARTED stack_virtual_raster')
     start = time.time()
     patterns_s2 = ("B02_10m.jp2", "B03_10m.jp2", "_B04_10m.jp2", "_B08_10m.jp2")
-    patterns = patterns_s2
+    patterns_lc8 = ("_B2.TIF", "_B3.TIF", "_B4.TIF", "_B5.TIF", "_B6.TIF", "_B7.TIF")
+    patterns = patterns_lc8
     image_path1, image_path2 = sys.argv[1], sys.argv[2]
     stack_virtual_raster(image_path1, image_path2)
     end = time.time()

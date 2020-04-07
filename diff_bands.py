@@ -17,14 +17,14 @@ def diff_bands_stk(image_path1, image_path2, output_folder):
 
     #get o stk de bandas .tif
     for filename in os.listdir(image_path1):
-        if filename.endswith('.tif'):
+        if filename.endswith('_stk.tif'):
             i1 = filename
             ds1 = gdal.Open(os.path.join(image_path1, filename))
     #Set current working dir to second image
     os.chdir(image_path2)
 
     for filename in os.listdir(image_path2):
-        if filename.endswith('.tif'):
+        if filename.endswith('_stk.tif'):
             i2 = filename
             ds2 = gdal.Open(os.path.join(image_path2, filename))
 
