@@ -17,7 +17,7 @@ def output_s2(image_path, li_bands):
     #Set Virtual Raster options
     vrt_options = gdal.BuildVRTOptions(separate='-separate')
     #Set output tif filename
-    output_filename = image_path.split("/")[-2] + '_stk.tif'
+    output_filename = image_path.split("/")[-0] + '_stk.tif'
     # Create virtual raster
     ds = gdal.BuildVRT('img{}.vrt'.format(output_filename), li_bands, options=vrt_options)
     #Create output tif
@@ -30,7 +30,7 @@ def output_lc8(image_path, li_bands):
     #Set Virtual Raster options
     vrt_options = gdal.BuildVRTOptions(separate='-separate')
     #Set output tif filename
-    output_filename = image_path.split("/")[-1] + '_stk.tif'
+    output_filename = image_path.split("/")[-0] + '_stk.tif'
     # Create virtual raster
     ds = gdal.BuildVRT('img{}.vrt'.format(output_filename), li_bands, options=vrt_options)
     #Create output tif
@@ -46,16 +46,16 @@ def list_bands(image_path, patterns):
     li_bands.sort()
     return li_bands
 
-def stack_virtual_raster(image_path1, image_path2):
+def stack_virtual_raster(image_path, pattern):
     #seleciona qual pattern para construir o stk TODO aprimorar para o pacote
-    li_bands1 = list_bands(image_path1, bands_s2_sr)
-    [x for _, x in sorted(zip(bands_s2_sr, li_bands1))]
-    li_bands2 = list_bands(image_path2, bands_s2_sr)
-    [x for _, x in sorted(zip(bands_s2_sr, li_bands2))]
-    output_s2(image_path1, li_bands1)
-    output_lc8(image_path2, li_bands2)
-    print(li_bands1)
-    print(li_bands2)
+    li_bands1 = list_bands(image_path1, bands_s2_toa)
+    [x for _, x in sorted(zip(pattern, li_bands1))]
+    output_lc8(image_path1, li_bands1)
+
+    li_bands2 = list_bands(image_path2, bands_lc8_toa)
+    [x for _, x in sorted(zip(pattern, li_bands2))]
+    output_s2(image_path2, li_bands2)
+
 
 if __name__ == '__main__':
     
@@ -65,8 +65,8 @@ if __name__ == '__main__':
     print('STARTED stack_virtual_raster')
     start = time.time()
 
-    #bands_lc8_toa = ('_B1.TIF', '_B2.TIF', '_B3.TIF', '_B4.TIF', '_B5.TIF', '_B6.TIF', '_B7.TIF', '_B9.TIF')  # Landsat 8 comparable spectral bands
-    #bands_s2_toa = ('_B01.jp2', '_B02.jp2', '_B03.jp2', '_B04.jp2', '_B8A.jp2', '_B11.jp2', '_B12.jp2', '_B10.jp2')  # Sentinel 2 comparable spectral bands
+    bands_lc8_toa = ('_B1.TIF', '_B2.TIF', '_B3.TIF', '_B4.TIF', '_B5.TIF', '_B6.TIF', '_B7.TIF', '_B9.TIF')  # Landsat 8 comparable spectral bands
+    bands_s2_toa = ('_B01.jp2', '_B02.jp2', '_B03.jp2', '_B04.jp2', '_B8A.jp2', '_B11.jp2', '_B12.jp2', '_B10.jp2')  # Sentinel 2 comparable spectral bands
 
     #bands_s2_sr = ("B02_10m.jp2", "B03_10m.jp2", "_B04_10m.jp2", "_B08_10m.jp2")
 

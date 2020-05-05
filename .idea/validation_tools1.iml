@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://$USER_HOME$/Fronza_BDC/1_SEN2COR_V_TESTE" />
     <content url="file://$USER_HOME$/Fronza_BDC/4_SR_NBAR_VAL" />
     <content url="file://$MODULE_DIR$" />
-    <content url="file://X:/BDC" />
     <orderEntry type="jdk" jdkName="Python 3.8 (arosics)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

@@ -5,11 +5,8 @@ import numpy
 
 
 ### INPUT ARGS
-# bands = ['blue', 'bnir']#, 'coastal', 'evi', 'green', 'ndvi', 'nir', 'red', 'redge1', 'redge2', 'redge3', 'swir1', 'swir2'] #Sentinel-2 cube bands
-bands_lc8 = ['_B1.TIF', '_B2.TIF', '_B3.TIF', '_B4.TIF', '_B5.TIF', '_B6.TIF', '_B7.TIF', '_B9.TIF'] #Landsat 8 comparable spectral bands
-bands_s2 = ['_B01.jp2', '_B02.jp2', '_B03.jp2', '_B04.jp2', '_B8A.jp2', '_B11.jp2', '_B12.jp2', '_B10.jp2'] #Sentinel 2 comparable spectral bands
-
-
+bands_lc8_toa = ('_B1.TIF', '_B2.TIF', '_B3.TIF', '_B4.TIF', '_B5.TIF', '_B6.TIF', '_B7.TIF', '_B9.TIF')  # Landsat 8 comparable spectral bands
+bands_s2_toa = ('_B01.jp2', '_B02.jp2', '_B03.jp2', '_B04.jp2', '_B8A.jp2', '_B11.jp2', '_B12.jp2', '_B10.jp2')  # Sentinel 2 comparable spectral bands
 
 
 img_reference = '/home/marujo/Downloads/arosics_test/CBERS/2017_02/C4_64_1M_STK_089098_2017-02-01_2017-02-28_{}.tif'
