@@ -1,6 +1,4 @@
-/arosics/ref.vrt
-/arosics/targ.vrt
-/arosics/.vscode/
+.vscode
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
