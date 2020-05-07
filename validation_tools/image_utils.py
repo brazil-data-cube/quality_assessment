@@ -1,5 +1,6 @@
 # This file is part of Brazil Data Cube Validation Tools.
 # Copyright (C) 2020.
+
 # Python Native
 import os
 # 3rd party
