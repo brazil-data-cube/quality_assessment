@@ -57,7 +57,7 @@ def find_images(image_path, bands):
     for band in bands:
         for filename in listdir:
             if band in filename:
-                band_list.append(filename)
+                band_list.append(os.path.join(image_path,filename))
     return band_list
 
 

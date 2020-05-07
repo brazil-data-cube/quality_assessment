@@ -23,7 +23,7 @@ def run_arosics(ref_geoArr, targ_geoArr, grid_res, window_size, path_out, projec
     # CRL_after_corr = COREG_LOCAL(img_reference.format('nir'), CRL.path_out, **kwargs)
     # CRL_after_corr.view_CoRegPoints(figsize=(15,15),backgroundIm='ref')
 
-    if shp_output:
+    if shp_output is not None:
         CRL.tiepoint_grid.to_PointShapefile(path_out=shp_output)
 
     return
