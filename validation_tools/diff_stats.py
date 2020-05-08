@@ -35,7 +35,7 @@ def diff_bands_stats(input_folder, output_folder):
     y_label=None
       
     #compute histogram to each band
-        for b in range(1, bands+1):
+    for b in range(1, bands+1):
         data = diffimg.GetRasterBand(b).ReadAsArray()
         dmin = np.min(data) #min value
         dmax = np.max(data) #max value
