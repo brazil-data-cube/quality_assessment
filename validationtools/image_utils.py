@@ -39,9 +39,9 @@ def warp(ds, gdaloptions=None):
         Returns:
             ds (gdal dataset): warped dataset.
     """
-    if gdaloptions is None:
-        geotrans, prj = ds.GetGeoTransform(), ds.GetProjection()
-        gdaloptions = {'format':'VRT', 'srcSRS':prj, 'dstSRS':dst_epsg, 'xRes':geotrans[1], 'yRes':geotrans[5]}
+    # if gdaloptions is None:
+    #     geotrans, prj = ds.GetGeoTransform(), ds.GetProjection()
+    #     gdaloptions = {'format':'VRT', 'srcSRS':prj, 'dstSRS':dst_epsg, 'xRes':geotrans[1], 'yRes':geotrans[5]}
     ds = gdal.Warp('', ds, **gdaloptions)
 
     return ds
