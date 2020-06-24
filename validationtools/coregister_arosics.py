@@ -3,6 +3,18 @@ from arosics import COREG_LOCAL
 
 
 def run_arosics(ref_geoArr, targ_geoArr, grid_res, window_size, path_out, projectDir, shp_output= None):
+    """
+        Coregister two images using Arosics package.
+
+        Parameters:
+            ref_geoArr (GeoArray): reference image.
+            targ_geoArr (GeoArray): target image (to be registered).
+            grid_res (int): arosics parameter: grid resolution.
+            window_size ((int, int)): arosics parameter: moving window size.
+            path_out (str): output path of registered image.
+            projectDir (str): project directory.
+            shp_output (str): output .shp directory.
+    """
     kwargs = {
         'grid_res'     : grid_res,
         'window_size'  : window_size,

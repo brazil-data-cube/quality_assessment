@@ -9,8 +9,16 @@ import numpy
 from osgeo import gdal
 
 
-
 def stack_virtual_raster(image_list, output=None):
+    """
+        Creates vrt from image list.
+
+        Parameters:
+            image_list ([str]): list of image paths that will be loaded.
+            output (str): output directory.
+        Returns:
+            ds (gdal dataset): vrt of images.
+    """
     #Set Virtual Raster options
     vrt_options = gdal.BuildVRTOptions(separate='-separate')
     #Create virtual raster
@@ -21,15 +29,33 @@ def stack_virtual_raster(image_list, output=None):
     return ds
 
 
-def warp(ds, gdaloptions):
-    # geotrans, prj = ds.GetGeoTransform(), ds.GetProjection()
-    # gdaloptions = {'format':'VRT', 'srcSRS':prj, 'dstSRS':dst_epsg, 'xRes':geotrans[1], 'yRes':geotrans[5]}
+def warp(ds, gdaloptions=None):
+    """
+        Warps an image.
+
+        Parameters:
+            ds (gdal dataset): dataset to be warped.
+            gdaloptions (dict): dictionary of gdal options.
+        Returns:
+            ds (gdal dataset): warped dataset.
+    """
+    if gdaloptions is None:
+        geotrans, prj = ds.GetGeoTransform(), ds.GetProjection()
+        gdaloptions = {'format':'VRT', 'srcSRS':prj, 'dstSRS':dst_epsg, 'xRes':geotrans[1], 'yRes':geotrans[5]}
     ds = gdal.Warp('', ds, **gdaloptions)
 
     return ds
 
 
 def load_singband_geoarray(ds):
+    """
+        Load a single band into geoarray.
+
+        Parameters:
+            ds (gdal dataset): dataset to be loaded.
+        Returns:
+            geoArr (GeoArray): Geo Array.
+    """
     ### Array, Geotrans and Projections
     array, geotrans, prj = ds.ReadAsArray(), ds.GetGeoTransform(), ds.GetProjection()
 
@@ -41,6 +67,14 @@ def load_singband_geoarray(ds):
 
 
 def load_multband_geoarray(ds):
+    """
+        Load a mult band into geoarray.
+
+        Parameters:
+            ds (gdal dataset): dataset to be loaded.
+        Returns:
+            geoArr (GeoArray): Geo Array.
+    """
     ### Array, Geotrans and Projections
     array, geotrans, prj = ds.ReadAsArray(), ds.GetGeoTransform(), ds.GetProjection()
 
@@ -52,6 +86,16 @@ def load_multband_geoarray(ds):
 
 
 def find_images(image_path, bands):
+    """
+        Load a mult band into geoarray.
+
+        Parameters:
+            image_path (str): path to directory containing images.
+            bands (lst): list of bands.
+        Returns:
+            band_list (lst): list of paths to images.
+    """
+    ###Create the empty list
     band_list = list()
     listdir = os.listdir(image_path)
     for band in bands:
@@ -59,19 +103,3 @@ def find_images(image_path, bands):
             if band in filename:
                 band_list.append(os.path.join(image_path,filename))
     return band_list
-
-
-def find_images_band(image_path, band):
-    '''This function works with an dir path and a band (.tif) to be returned in that folders and subfolders
-    retrieve a list of specific bands.
-    img_list retrieve strings band paths
-    band = band string that user need retrive. i.e.: red, nir, blue, B02, B01, etc.'''
-    ###Create the empty list
-    img_list = list()
-    ###for in the folders to retrieve specific band in path, subdirs and files - using os.walk
-    for path, subdirs, files in os.walk(image_path):
-        for name in files:
-            if name.endswith(band + '.tif'):
-                img_list.append(os.path.join(image_path,name))
-    return img_list
-
