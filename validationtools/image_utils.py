@@ -85,21 +85,21 @@ def load_multband_geoarray(ds):
     return geoArr
 
 
-def find_images(image_path, bands):
+def find_images(dir_path, bands):
     """
         Load a mult band into geoarray.
 
         Parameters:
-            image_path (str): path to directory containing images.
+            dir_path (str): path to directory containing images.
             bands (lst): list of bands.
         Returns:
             band_list (lst): list of paths to images.
     """
     ###Create the empty list
     band_list = list()
-    listdir = os.listdir(image_path)
+    listdir = os.listdir(dir_path)
     for band in bands:
         for filename in listdir:
             if band in filename:
-                band_list.append(os.path.join(image_path,filename))
+                band_list.append(os.path.join(dir_path,filename))
     return band_list
