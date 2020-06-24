@@ -1,7 +1,6 @@
-#
 # This file is part of Brazil Data Cube Validation Tools.
 # Copyright (C) 2020 INPE.
-#
+
 # Python Native
 import os
 import time
