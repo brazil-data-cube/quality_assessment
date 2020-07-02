@@ -14,10 +14,11 @@ install_requires = [
 
 setup(
     # Needed to silence warnings (and to be a worthwhile package)
-    name='validation-tools',
-    url='https://github.com/fronzag/validation_tools.py',
+    name='quality-assessment',
+    # url='https://github.com/brazil-data-cube/quality_assessment',
+    url='https://github.com/fronzag/quality_assessment',
     author='José Guilherme Fronza and Rennan de Freitas Bezerra Marujo',
-    author_email='author@example.com',
+    author_email='guilherme.fronza@gmail.com and rennanmarujo@gmail.com',
     # Needed to actually package something
     packages=packages,
     # Needed for dependencies

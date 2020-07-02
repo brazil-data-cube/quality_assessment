@@ -1,5 +1,5 @@
-# Validation Tools
-Validation tools scripts
+# Quality Assessment
+Quality Assessment tools scripts
 
 ## Dependencies
 
@@ -10,17 +10,17 @@ Validation tools scripts
 ## Installing via Git
 
 ```
-python3 -m pip install git+https://github.com/fronzag/validation_tools.py
+python3 -m pip install git+https://github.com/brazil-data-cube/quality_assessment
 ```
 
 or
 
 ```
-git clone https://github.com/fronzag/validation_tools
-cd validation_tools
+git clone https://github.com/brazil-data-cube/quality_assessment
+cd quality_assessment
 pip install .
 ```
 
 ## Usage
 
-[example](https://github.com/fronzag/validationtools/example.py)
+[example](https://github.com/brazil-data-cube/quality_assessment/example.py)
