@@ -1,7 +1,7 @@
 # Python Native
 import time
 # 3rdparty
-from validationtools import raster_comparison
+from qualityassessment import raster_comparison
 from osgeo import gdal
 
 
